@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<body>
+
+  <h1>hello. world.</h1>
+
+  <button onclick="onRequestPerm()">solicitar permiso para ser notificado</button>
+
+  <button onclick="notifyMe()">notificame</button>
+
+  <h3><a href="index.html">Siguiente página</a></h3>
+
+  <div>
+    <img src="images/foto4.jpg" style="width:80%;height:auto;">
+  </div>
+
+</body>
+<script>
+console.log( Notification.permission );
+
+function onRequestPerm(){
+  window.alert(Notification.permission);
+  if( Notification.permission === "default" ) {
+    Notification.requestPermission();
+  }
+}
+
+function notifyMe(){
+  if( Notification.permission === "granted" ){
+    let notif = new Notification( "soy una notificacion muy chula", 
+            { lang: "es_ES",
+              badge: "images/photo.svg", 
+              //body: "Había una vez\nun barquito chiquito\nque no sabía,\nque no sabía,\nque no sabía,\nnavegar", 
+              icon: "images/candle.svg", 
+              requireInteraction: false } );
+  }
+}
+
+    
+
+</script>
+</html>
