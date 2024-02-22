@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script>
+
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('service-worker.js')
+        .then( ()=>{
+          let request = new XMLHttpRequest();
+          request.onload = () => {
+            let remoteVersionInfo = JSON.parse( request.response );
+            let localVersionInfo = localStorage.getItem("versionInfo");
+            if( !localVersionInfo || remoteVersionInfo.version != localVersionInfo ){
+              console.log("DEBEMOS BORRAR TODA LA CACHE DEL NAVEGADOR");
+              console.log( remoteVersionInfo );
+            }
+            localStorage.setItem("versionInfo", remoteVersionInfo.version );
+          };
+          request.open( "GET", "version.json");
+          request.send();
+          
+        });
+    }
+
+  </script>
+
+</head>
+
+<body>
+
+  <script src="test1.js"></script>
+  <script src="test2.js"></script>
+
+  <script>
+    console.log( "test1 value: " + test1 );
+    console.log( "test2 value: " + test2 );
+  </script>
+
+  <h1>Resultados:</h1>
+  <p>Valor1: <span id="result1"></span></p>
+  <p>Valor2: <span id="result2"></span></p>
+
+  <script>
+    document.getElementById("result1").innerText = test1;
+    document.getElementById("result2").innerText = test2;
+  </script>
+
+</body>
+
+</html>
+
